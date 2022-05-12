@@ -39,6 +39,44 @@ public class Leetcode02AddTwoNumbers {
      * @param args
      */
     public static void main(String[] args) {
+        ListNode listNode = new ListNode(2);
+        ListNode listNode1 = new ListNode(4);
+        ListNode listNode2 = new ListNode(3);
+        listNode.next = listNode1;
+        listNode1.next = listNode2;
+
+        ListNode listNode3 = new ListNode(5);
+        ListNode listNode4 = new ListNode(6);
+        ListNode listNode5 = new ListNode(4);
+        listNode3.next = listNode4;
+        listNode4.next = listNode5;
+        ListNode addTwoNumbers = addTwoNumbers1(listNode, listNode3);
+        while (addTwoNumbers.next != null){
+            System.out.print(addTwoNumbers.val);
+            addTwoNumbers = addTwoNumbers.next;
+        }
+
+    }
+
+    public static ListNode addTwoNumbers1(ListNode l1, ListNode l2) {
+        int sum = l1.val + l2.val;
+        int num = sum / 10;
+        ListNode res = new ListNode(sum % 10);
+        loopListNode(res, num, l1.next, l2.next);
+        return res;
+    }
+
+    public static void loopListNode(ListNode res, int num, ListNode l1, ListNode l2){
+
+        if (l1 != null || l2 != null || num != 0){
+            int l1Var = l1 == null ? 0 : l1.val;
+            int l2Var = l2 == null ? 0 : l2.val;
+            int sum = l1Var + l2Var + num;
+            int childNum = sum / 10;
+            ListNode chidList= new ListNode(sum % 10);
+            res.next = chidList;
+            loopListNode(chidList, childNum, l1 == null ? null : l1.next, l2 == null ? null : l2.next);
+        }
 
     }
 
@@ -51,7 +89,7 @@ public class Leetcode02AddTwoNumbers {
         int surplus =  sum % 10;
         result = new ListNode(surplus);
 
-        loopListNode(result, l1, l2, num);
+        loopListNode(result, l1.next, l2.next, num);
 
         return result;
 
